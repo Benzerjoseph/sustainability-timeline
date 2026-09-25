@@ -1,1 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Intel Sustainability Timeline — The RISE Strategy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F3F5F4;
+    --paper-dim:#E7EBEA;
+    --ink:#0B1E2D;
+    --ink-soft:#48606E;
+    --navy:#001B33;
+    --navy-2:#00304F;
+    --blue:#0068B5;
+    --blue-light:#5FB4F0;
+    --green:#1F6F54;
+    --gold:#C99A3D;
+    --line:rgba(11,30,45,.14);
+    --line-on-navy:rgba(255,255,255,.16);
+    --radius:14px;
+    --ff-display:'Big Shoulders Display',sans-serif;
+    --ff-body:'IBM Plex Sans',system-ui,sans-serif;
+    --ff-mono:'IBM Plex Mono',monospace;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--ff-body);
+    -webkit-font-smoothing:antialiased;
+  }
+  img,svg{max-width:100%;display:block;}
+  a{color:inherit;}
+  ::selection{background:var(--blue);color:#fff;}
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.001ms !important;transition-duration:.001ms !important;}
+  }
+  :focus-visible{outline:2.5px solid var(--blue-light);outline-offset:3px;border-radius:4px;}
 
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    background:radial-gradient(120% 140% at 15% 0%, var(--navy-2) 0%, var(--navy) 55%, #000C18 100%);
+    color:#EAF3FA;
+    overflow:hidden;
+    padding:0 6vw 0;
+  }
+  .circuit{
+    position:absolute;inset:0;
+    opacity:.35;
+    pointer-events:none;
+  }
+  .hero-inner{
+    position:relative;
+    max-width:1180px;
+    margin:0 auto;
+    padding:64px 0 96px;
+    display:flex;
+    flex-direction:column;
+    min-height:min(760px,86vh);
+    justify-content:space-between;
+  }
+  .brand{
+    display:flex;align-items:center;gap:10px;
+    font-family:var(--ff-mono);font-weight:600;font-size:.95rem;
+    letter-spacing:.02em;
+  }
+  .brand .dot{width:9px;height:9px;border-radius:50%;background:var(--blue-light);}
+  .wordmark{font-size:1.15rem;color:#fff;letter-spacing:-.01em;}
+  .wordmark b{color:var(--blue-light);}
+
+  .hero-copy{max-width:760px;margin-top:auto;}
+  .kicker{
+    font-family:var(--ff-mono);
+    font-size:.82rem;
+    color:var(--blue-light);
+    display:flex;align-items:center;gap:10px;
+    margin-bottom:22px;
+  }
+  .kicker .rule{width:40px;height:1px;background:var(--blue-light);opacity:.6;}
+  h1.headline{
+    font-family:var(--ff-display);
+    font-weight:800;
+    font-size:clamp(2.6rem,7vw,5.4rem);
+    line-height:.96;
+    margin:0 0 22px;
+    letter-spacing:-.01em;
+  }
+  h1.headline em{
+    font-style:normal;
+    color:var(--blue-light);
+  }
+  .sub{
+    font-size:clamp(1.02rem,1.6vw,1.22rem);
+    color:#C6D9E4;
+    max-width:56ch;
+    line-height:1.55;
+    margin:0 0 40px;
+  }
+  .hero-meta{
+    display:flex;flex-wrap:wrap;gap:28px 48px;
+    padding-top:28px;border-top:1px solid var(--line-on-navy);
+  }
+  .stat b{
+    display:block;font-family:var(--ff-display);font-weight:700;
+    font-size:1.9rem;color:#fff;line-height:1;
+  }
+  .stat span{
+    font-family:var(--ff-mono);font-size:.75rem;color:#8FB2C8;
+    letter-spacing:.01em;
+  }
+
+  /* ---------- TIMELINE INTRO ---------- */
+  .timeline-section{padding:88px 6vw 40px;max-width:1180px;margin:0 auto;}
+  .section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:36px;}
+  h2.section-title{
+    font-family:var(--ff-display);font-weight:800;
+    font-size:clamp(1.9rem,4vw,3rem);margin:0;line-height:1.02;letter-spacing:-.01em;
+  }
+  .section-note{
+    max-width:38ch;color:var(--ink-soft);font-size:.98rem;line-height:1.5;margin:0;
+  }
+
+  .progress-wrap{
+    display:none;
+    align-items:center;gap:14px;margin:0 6vw 18px;max-width:1180px;margin-left:auto;margin-right:auto;
+  }
+  .progress-track{flex:1;height:2px;background:var(--line);position:relative;border-radius:2px;overflow:hidden;}
+  .progress-fill{position:absolute;inset:0 auto 0 0;width:0%;background:var(--blue);transition:width .1s linear;}
+  .progress-label{font-family:var(--ff-mono);font-size:.72rem;color:var(--ink-soft);white-space:nowrap;}
+
+  /* ---------- TRACK ---------- */
+  .track{
+    display:flex;
+    gap:22px;
+    padding:8px 6vw 48px;
+    overflow-x:auto;
+    scroll-snap-type:x proximity;
+    scrollbar-width:thin;
+  }
+  .track::-webkit-scrollbar{height:6px;}
+  .track::-webkit-scrollbar-thumb{background:var(--line);border-radius:4px;}
+
+  .card{
+    scroll-snap-align:start;
+    flex:0 0 auto;
+    width:min(310px,78vw);
+    background:var(--paper-dim);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:26px 24px 24px;
+    display:flex;flex-direction:column;
+    position:relative;
+    transition:transform .28s cubic-bezier(.2,.7,.3,1), box-shadow .28s ease, border-color .28s ease;
+  }
+  .card:hover, .card:focus-within{
+    transform:translateY(-8px);
+    border-color:var(--blue);
+    box-shadow:0 22px 40px -18px rgba(0,32,60,.35);
+  }
+  .card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px;}
+  .icon-badge{
+    width:44px;height:44px;border-radius:10px;
+    background:linear-gradient(155deg,var(--blue),var(--navy-2));
+    display:flex;align-items:center;justify-content:center;color:#fff;flex:none;
+  }
+  .icon-badge svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.7;}
+  .goal-tag{
+    font-family:var(--ff-mono);font-size:.66rem;letter-spacing:.04em;
+    color:var(--gold);border:1px solid var(--gold);
+    padding:3px 8px;border-radius:20px;height:fit-content;
+  }
+  .year{
+    font-family:var(--ff-mono);font-weight:600;font-size:1.05rem;
+    color:var(--blue);margin-bottom:6px;
+  }
+  .card h3{
+    font-family:var(--ff-body);font-weight:600;font-size:1.14rem;
+    margin:0 0 10px;line-height:1.28;
+  }
+  .blurb{color:var(--ink-soft);font-size:.92rem;line-height:1.55;margin:0;}
+
+  .detail{
+    margin-top:16px;padding-top:16px;border-top:1px dashed var(--line);
+    max-height:0;opacity:0;overflow:hidden;
+    transition:max-height .32s ease, opacity .28s ease, margin-top .32s ease;
+  }
+  .card:hover .detail, .card:focus-within .detail{
+    max-height:220px;opacity:1;
+  }
+  .detail p{margin:0;color:var(--ink);font-size:.87rem;line-height:1.55;}
+  .card[data-open="true"] .detail{max-height:220px;opacity:1;}
+
+  .reveal-btn{
+    margin-top:auto;padding-top:16px;
+    background:none;border:none;color:var(--blue);
+    font-family:var(--ff-mono);font-size:.72rem;letter-spacing:.03em;
+    display:flex;align-items:center;gap:6px;cursor:pointer;
+  }
+  .reveal-btn svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;transition:transform .25s ease;}
+  .card[data-open="true"] .reveal-btn svg{transform:rotate(180deg);}
+  @media (hover:hover){ .reveal-btn{display:none;} }
+
+  /* ---------- MOBILE STACK ---------- */
+  @media (max-width:720px){
+    .track{
+      flex-direction:column;
+      overflow-x:visible;
+      scroll-snap-type:none;
+      padding:4px 6vw 48px;
+      gap:16px;
+      position:relative;
+    }
+    .track::before{
+      content:"";position:absolute;left:calc(6vw + 21px);top:0;bottom:48px;width:1px;background:var(--line);
+    }
+    .card{width:100%;margin-left:44px;}
+    .icon-badge{position:absolute;left:-44px;top:26px;}
+    .card:hover, .card:focus-within{transform:none;}
+    .detail{max-height:0;}
+    .card[data-open="true"] .detail{max-height:260px;}
+    .progress-wrap{display:none !important;}
+  }
+  @media (min-width:721px){
+    .progress-wrap{display:flex;}
+  }
+
+  footer{
+    padding:36px 6vw 36px;
+    border-top:1px solid var(--line);
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
+    font-family:var(--ff-mono);font-size:.72rem;color:var(--ink-soft);
+    max-width:1180px;margin:0 auto;
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="i-pay" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5v9M9.3 15c.4 1 1.4 1.6 2.7 1.6 1.7 0 2.8-.8 2.8-2s-1-1.7-2.8-2c-1.8-.3-2.7-.9-2.7-2 0-1.2 1.1-2 2.7-2 1.3 0 2.3.6 2.7 1.6"/></symbol>
+    <symbol id="i-chain" viewBox="0 0 24 24"><path d="M10 14a5 5 0 0 0 7 0l2-2a5 5 0 0 0-7-7l-1 1"/><path d="M14 10a5 5 0 0 0-7 0l-2 2a5 5 0 0 0 7 7l1-1"/></symbol>
+    <symbol id="i-rise" viewBox="0 0 24 24"><path d="M12 3v4M5 8l2.5 2M19 8l-2.5 2M4 20h16M7 20v-4a5 5 0 0 1 10 0v4"/></symbol>
+    <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M6 20C4 13 8 6 19 5c1 10-6 15-13 15Z"/><path d="M6 20c2-5 5-8 9-11"/></symbol>
+    <symbol id="i-scope" viewBox="0 0 24 24"><path d="M4 18h5m0 0-2.5-2.5M9 18l-2.5 2.5"/><circle cx="17" cy="8" r="4"/><path d="M17 12v3"/></symbol>
+    <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 3s6.5 7.2 6.5 11.5a6.5 6.5 0 1 1-13 0C5.5 10.2 12 3 12 3Z"/></symbol>
+    <symbol id="i-cycle" viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 13.5-5.8M20 12a8 8 0 0 1-13.5 5.8"/><path d="M17.5 3v3.5H14M6.5 21v-3.5H10"/></symbol>
+    <symbol id="i-horizon" viewBox="0 0 24 24"><path d="M3 17h18M12 17V8m0 0 4 4m-4-4-4 4"/><circle cx="12" cy="5" r="1.3"/></symbol>
+  </defs>
+</svg>
+
+<header class="hero">
+  <svg class="circuit" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice">
+    <g stroke="#3FA9F5" stroke-width="1" fill="none" opacity=".5">
+      <path d="M0 120H260V220H520V90H1200"/>
+      <path d="M0 340H180V440H460V520H900V400H1200"/>
+      <path d="M0 560H320V620H700V500H1000V600H1200"/>
+      <path d="M140 0V120M520 90V0M900 700V400M320 700V620M700 620V500"/>
+    </g>
+    <g fill="#5FB4F0" opacity=".6">
+      <circle cx="260" cy="120" r="3"/><circle cx="520" cy="220" r="3"/><circle cx="180" cy="340" r="3"/>
+      <circle cx="460" cy="440" r="3"/><circle cx="900" cy="500" r="3"/><circle cx="320" cy="560" r="3"/>
+      <circle cx="700" cy="500" r="3"/><circle cx="1000" cy="600" r="3"/>
+    </g>
+  </svg>
+  <div class="hero-inner">
+    <div class="brand"><span class="dot"></span><span class="wordmark">int<b>el</b></span></div>
+    <div class="hero-copy">
+      <p class="kicker"><span class="rule"></span>THE RISE STRATEGY · 2008–2050</p>
+      <h1 class="headline">Every transistor<br>answers to <em>a planet.</em></h1>
+      <p class="sub">Intel builds the chips inside the modern world — and carries the responsibility that comes with it. This is the twenty-year arc of how sustainability moved from a bonus metric to a company-wide bet on net zero.</p>
+      <div class="hero-meta">
+        <div class="stat"><b>44B</b><span>GALLONS OF WATER CONSERVED SINCE 2010</span></div>
+        <div class="stat"><b>2040</b><span>TARGET FOR NET-ZERO OPERATIONS</span></div>
+        <div class="stat"><b>2050</b><span>TARGET FOR NET-ZERO SUPPLY CHAIN</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="timeline-section" aria-labelledby="tl-heading">
+    <div class="section-head">
+      <h2 class="section-title" id="tl-heading">Two decades,<br>three horizons.</h2>
+      <p class="section-note">Scroll the rail below — or swipe on mobile. Hold on any milestone to see what actually changed.</p>
+    </div>
+  </section>
+
+  <div class="progress-wrap" aria-hidden="true">
+    <span class="progress-label">2008</span>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <span class="progress-label">2050</span>
+  </div>
+
+  <div class="track" id="track" tabindex="0" aria-label="Sustainability milestone timeline, scrollable">
+    <!-- cards injected by JS -->
+  </div>
+</main>
+
+<footer>
+  <span>Built as an unofficial fan project · not an Intel Corporation production</span>
+  <span>Sources: Intel 2030 RISE strategy &amp; corporate responsibility reporting</span>
+</footer>
+
+<script>
+const milestones = [
+  {year:"2008", title:"Pay tied to purpose", icon:"i-pay",
+   blurb:"Intel links executive and employee bonuses to corporate-responsibility performance.",
+   detail:"Every year since, a slice of the company-wide bonus pool has moved with metrics like emissions, safety, and diversity — accountability built straight into the paycheck, not left to a mission statement."},
+  {year:"2012", title:"Raising the supply-chain bar", icon:"i-chain",
+   blurb:"The PASS program pushes responsible practices deep into Intel's supplier network.",
+   detail:"The Program to Accelerate Supplier Sustainability assesses and coaches suppliers on labor, ethics, and environmental standards — extending Intel's footprint of responsibility far beyond its own fabs."},
+  {year:"2020", title:"RISE strategy launches", icon:"i-rise",
+   blurb:"Intel unveils RISE — Responsible, Inclusive, Sustainable, Enabling — with ten-year 2030 goals.",
+   detail:"RISE reframes sustainability as one company-wide framework instead of scattered site-by-site efforts, aligning every business unit around the same 2030 goals."},
+  {year:"2022", title:"A net-zero commitment", icon:"i-leaf",
+   blurb:"Intel commits to net-zero emissions across its own operations by 2040, backed by a $1.3B green bond.",
+   detail:"Bond proceeds fund renewable electricity, process-efficiency upgrades, and conservation projects across Intel's global manufacturing footprint."},
+  {year:"2023", title:"Looking upstream", icon:"i-scope",
+   blurb:"Intel extends its ambition to net-zero upstream Scope 3 emissions by 2050.",
+   detail:"The first green-bond impact report is published, tracking exactly where sustainable-finance dollars go — and turning attention to the footprint of materials and suppliers, not just Intel's own factories."},
+  {year:"2030", tag:"GOAL", title:"Net-positive water", icon:"i-drop",
+   blurb:"Aiming to conserve 60B cumulative gallons and restore more freshwater than is consumed.",
+   detail:"A decade of conservation already recovered 44 billion gallons. The final stretch leans on restoration partnerships with the local watersheds around Intel's water-intensive fabs."},
+  {year:"2030", tag:"GOAL", title:"Renewable power, zero landfill", icon:"i-cycle",
+   blurb:"Targeting 100% renewable electricity and zero total manufacturing waste to landfill.",
+   detail:"Manufacturing byproducts get redirected into reuse and recycling streams instead of disposal, while power purchasing shifts entirely to renewable sources."},
+  {year:"2040→50", tag:"GOAL", title:"The net-zero horizon", icon:"i-horizon",
+   blurb:"Operational emissions hit net zero by 2040; upstream supply-chain emissions follow by 2050.",
+   detail:"The long runway reflects the true scale of the task — decarbonizing a global chip-manufacturing supply chain, not just a single campus."}
+];
+
+const track = document.getElementById('track');
+track.innerHTML = milestones.map((m,i)=>`
+  <article class="card" data-open="false" tabindex="0" aria-describedby="d${i}">
+    <div class="card-top">
+      <div class="icon-badge"><svg><use href="#${m.icon}"/></svg></div>
+      ${m.tag ? `<span class="goal-tag">${m.tag}</span>` : ''}
+    </div>
+    <div class="year">${m.year}</div>
+    <h3>${m.title}</h3>
+    <p class="blurb">${m.blurb}</p>
+    <div class="detail" id="d${i}"><p>${m.detail}</p></div>
+    <button class="reveal-btn" type="button" aria-expanded="false">Read more
+      <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+  </article>
+`).join('');
+
+track.querySelectorAll('.reveal-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const card = btn.closest('.card');
+    const open = card.getAttribute('data-open') === 'true';
+    card.setAttribute('data-open', String(!open));
+    btn.setAttribute('aria-expanded', String(!open));
+  });
+});
+
+const fill = document.getElementById('progressFill');
+function updateProgress(){
+  const max = track.scrollWidth - track.clientWidth;
+  const pct = max > 0 ? (track.scrollLeft / max) * 100 : 0;
+  fill.style.width = pct + '%';
+}
+track.addEventListener('scroll', updateProgress, {passive:true});
+window.addEventListener('resize', updateProgress);
+updateProgress();
+</script>
+</body>
+</html>
